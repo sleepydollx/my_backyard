@@ -1,4 +1,4 @@
-# my_backyard
+
 # Petal Lock
 
 A cute password strength checker and generator, built in Python.
