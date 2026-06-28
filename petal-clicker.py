@@ -11,6 +11,23 @@ UPGRADES = [
 COST_GROWTH_RATE = 1.15 
 AUTO_TICK_SECONDS = 1.0
 
+import json
+import os
+
+def save_game(points, upgrades):
+    data = {"points": points, "upgrades": upgrades}
+    with open("savegame.json", "w") as f:
+        json.dump(data, f)
+
+def load_game():
+    if os.path.exists("savegame.json"):
+        with open("savegame.json") as f:
+            data = json.load(f)
+        # Restore upgrades from saved state
+        for i, upgrade_data in enumerate(data["upgrades"]):
+            UPGRADES[i]["owned"] = upgrade_data["owned"]
+        return data["points"]
+    return 0
 
 def upgrade_current_cost(upgrade):
     return round(upgrade["base_cost"] * (COST_GROWTH_RATE ** upgrade["owned"]))
@@ -104,3 +121,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    
